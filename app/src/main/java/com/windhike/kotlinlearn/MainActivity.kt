@@ -3,11 +3,11 @@ package com.windhike.kotlinlearn
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
+import com.windhike.kotlinlearn.http.ForcastByZipcodeRequest
+import com.windhike.kotlinlearn.http.loge
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
-import java.net.URL
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,9 +20,10 @@ class MainActivity : AppCompatActivity() {
 //            toast("print name ${getMyName()}")
 
             async() {
-                val result = URL("http://httpbin.org/get").readText()
+                val request = ForcastByZipcodeRequest("41000")
+                val result = request.request()
                 uiThread {
-                    Log.e(javaClass.simpleName,"==========================$result======")
+                    loge("==========================$result======")
                     tvHello.text = "result=$result"
                 }
             }
