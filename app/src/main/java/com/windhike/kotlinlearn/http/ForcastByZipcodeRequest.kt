@@ -1,8 +1,8 @@
 package com.windhike.kotlinlearn.http
 
-import android.util.Base64
 import android.util.Log
 import com.google.gson.Gson
+import com.windhike.kotlinlearn.model.ForecastResult
 import java.net.URL
 
 
@@ -18,9 +18,8 @@ class ForcastByZipcodeRequest(val zipcode:String,val gson: Gson = Gson()){
     }
     fun request():String {
         val json:String = URL(COMPLETE_URL+zipcode).readText()
-//        val result = Base64.encodeToString(json.toByteArray(), Base64.DEFAULT)
-        val result = java.lang.String(Base64.decode(json,Base64.CRLF),"UTF-8") as String
-        return result
+        val foreResult = gson.fromJson(json, ForecastResult::class.java)
+        return foreResult.toString()
     }
 
 }
