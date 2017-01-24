@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.widget.Toast
 import com.windhike.kotlinlearn.domain.command.RequestForecastCommand
 import com.windhike.kotlinlearn.http.loge
-import com.windhike.kotlinlearn.model.Forecast
 import com.windhike.kotlinlearn.model.ModelForecast
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.async
@@ -18,9 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tvHello.text = " 天气数据${getMyName()}"
-        tvHello.setOnClickListener {
-
-        }
         rvRecycler.layoutManager = LinearLayoutManager(this)
     }
 
@@ -31,13 +27,14 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchData() = async() {
         val command = RequestForecastCommand("41000")
+        command.setO{
+
+        }
         val result = command.excute()
         uiThread {
-            rvRecycler.adapter = TextListAdapter(result,object : OnItemClickListener{
-                override fun invoke(forecast: ModelForecast) {
-                    showToast("item was clicked")
-                }
-            })
+            rvRecycler.adapter = TextListAdapter(result){
+                showToast("item was clicked")
+            }
         }
     }
 }

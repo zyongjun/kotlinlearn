@@ -8,7 +8,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
 import com.windhike.kotlinlearn.extensions.ctx
-import com.windhike.kotlinlearn.model.Forecast
 import com.windhike.kotlinlearn.model.ForecastList
 import com.windhike.kotlinlearn.model.ModelForecast
 import org.jetbrains.anko.find
@@ -17,7 +16,7 @@ import org.jetbrains.anko.find
  * author: gzzyj on 2017/1/17.
  * email:zhyongjun@windhike.cn
  */
-class TextListAdapter(val list:ForecastList,val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<TextListAdapter.Holder>(){
+class TextListAdapter(val list:ForecastList,val itemClickListener: (View) -> Unit) : RecyclerView.Adapter<TextListAdapter.Holder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TextListAdapter.Holder {
         return Holder(LayoutInflater.from(parent?.context).inflate(R.layout.item_forecast,parent,false),itemClickListener)
@@ -29,7 +28,7 @@ class TextListAdapter(val list:ForecastList,val itemClickListener: OnItemClickLi
 
     override fun getItemCount(): Int = list.size()
 
-    class Holder(view: View,val itemClickListener: OnItemClickListener) :RecyclerView.ViewHolder(view){
+    class Holder(view: View,val itemClickListener: (View) -> Unit) :RecyclerView.ViewHolder(view){
         private val icons:ImageView
         private val tvDate:TextView
         private val tvDescription:TextView
@@ -50,7 +49,7 @@ class TextListAdapter(val list:ForecastList,val itemClickListener: OnItemClickLi
                 tvDescription.text = "$description"
                 tvMaxTemperature.text = "$high"
                 tvMinTemperature.text = "$low"
-                itemView.setOnClickListener { itemClickListener(this)}
+                itemView.setOnClickListener { itemClickListener(itemView)}
             }
         }
     }
