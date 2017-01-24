@@ -16,10 +16,9 @@ class ForcastByZipcodeRequest(val zipcode:String,val gson: Gson = Gson()){
         private val URL = "http://api.openweathermap.org/data/2.5/forecast/daily?mode=json&units=metric&cnt=7"
         private val COMPLETE_URL = "$URL&APPID=$APP_ID&q="
     }
-    fun request():String {
+    fun request():ForecastResult {
         val json:String = URL(COMPLETE_URL+zipcode).readText()
-        val foreResult = gson.fromJson(json, ForecastResult::class.java)
-        return foreResult.toString()
+        return gson.fromJson(json, ForecastResult::class.java)
     }
 
 }
